@@ -1,0 +1,25 @@
+import pandas as pd
+# 1) Load datase
+d = pd.read_csv("data/day18_binning.csv")
+print("First Rows")
+print(d.head())
+print("-" * 50)
+a = d["age"]
+d["w"] = pd.cut(a, bins=3)
+print("Equal-Width Counts")
+print(d["w"].value_counts())
+print("-" * 50)
+d["q"] = pd.qcut(a, q=4)
+print("Equal-Frequency Counts")
+print(d["q"].value_counts())
+print("-" * 50)
+e = [0, 13, 18, 65, 120]
+l = ["Child", "Teen", "Adult", "Senior"]
+d["g"] = pd.cut(a, bins=e, labels=l, right=False)
+print("Domain Bins Counts")
+print(d["g"].value_counts())
+print("-" * 50)
+o = pd.get_dummies(d["g"], prefix="age")
+print("One-Hot Encoded Columns")
+print(o.head())
+print("-" * 50)
