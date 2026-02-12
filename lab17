@@ -1,0 +1,29 @@
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+# 1) Load dataset
+d = pd.read_csv("data/day17_scaling.csv")
+# 2) Select numeric columns only
+n = d.select_dtypes(include="number")
+print("Original Summary")
+print(n.describe())
+print("-" * 50)
+# 3) Min-Max Scaling
+m = MinMaxScaler()
+n_mm = m.fit_transform(n)
+d_mm = pd.DataFrame(n_mm, columns=n.columns)
+print("Min-Max Summary")
+print(d_mm.describe())
+print("-" * 50)
+# 4) Standard Scaling
+s = StandardScaler()
+n_s = s.fit_transform(n)
+d_s = pd.DataFrame(n_s, columns=n.columns)
+print("Standard Scaling Summary")
+print(d_s.describe())
+print("-" * 50)
+# 5) Robust Scaling
+r = RobustScaler()
+n_r = r.fit_transform(n)
+d_r = pd.DataFrame(n_r, columns=n.columns)
+print("Robust Scaling Summary")
+print(d_r.describe())
