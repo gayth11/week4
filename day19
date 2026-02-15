@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import PowerTransformer
+df = pd.read_csv("day19_transform.csv")
+feature = df.select_dtypes(include=np.number).columns[0]
+df[f"{feature}_log1p"] = np.log1p(df[feature])
+df[f"{feature}_sqrt"] = np.sqrt(df[feature])
+pt = PowerTransformer(method="yeo-johnson")
+df[f"{feature}_yeojohnson"] = pt.fit_transform(df[[feature]])
+print("=== BEFORE ===")
+print(df[feature].describe())
+print("Skew:", df[feature].skew())
+print("\n=== AFTER LOG1P ===")
+print(df[f"{feature}_log1p"].describe())
+print("Skew:", df[f"{feature}_log1p"].skew())
+print("\n=== AFTER SQRT ===")
+print(df[f"{feature}_sqrt"].describe())
+print("Skew:", df[f"{feature}_sqrt"].skew())
+print("\n=== AFTER YEO-JOHNSON ===")
+print(df[f"{feature}_yeojohnson"].describe())
+print("Skew:", df[f"{feature}_yeojohnson"].skew())
